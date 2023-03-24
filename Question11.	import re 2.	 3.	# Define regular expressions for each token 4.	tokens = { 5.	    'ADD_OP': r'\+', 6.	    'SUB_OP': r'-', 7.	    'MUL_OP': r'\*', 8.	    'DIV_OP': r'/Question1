@@ -1,0 +1,35 @@
+	import re
+  
+	# Define regular expressions for each token
+	tokens = {
+	    'ADD_OP': r'\+',
+	    'SUB_OP': r'-',
+	    'MUL_OP': r'\*',
+	    'DIV_OP': r'/',
+	    'MOD_OP': r'%',
+	    'LPAREN': r'\(',
+	    'RPAREN': r'\)',
+	    'ASSIGN_OP': r'=',
+	    'EQUALS_OP': r'==',
+	    'LESS_THAN_OP': r'<',
+	    'LESS_THAN_OR_EQUAL_OP': r'<=',
+	    'GREATER_THAN_OP': r'>',
+	    'GREATER_THAN_OR_EQUAL_OP': r'>=',
+	    'LOGICAL_AND_OP': r'&&',
+	    'LOGICAL_OR_OP': r'\|\|',
+	    'IDENTIFIER': r'[a-zA-Z_][a-zA-Z0-9_]*',
+	    'INT_LITERAL': r'\d+',
+	    'FLOAT_LITERAL': r'\d+\.\d+',
+}
+
+	# Combine the regular expressions into a single pattern
+	pattern = '|'.join('(?P<%s>%s)' % pair for pair in tokens.items())
+	
+	# Define a function to tokenize the input string
+	def tokenize(input_string):
+	    token_stream = []
+	    for match in re.finditer(pattern, input_string):
+	        token_type = match.lastgroup
+	        token_value = match.group(token_type)
+	        token_stream.append((token_type, token_value))
+	    return token_stream
